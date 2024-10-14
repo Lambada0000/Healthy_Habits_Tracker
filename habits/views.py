@@ -27,8 +27,11 @@ class HabitCreateAPIView(CreateAPIView):
 class HabitListAPIView(ListAPIView):
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
-    permission_classes = [IsOwner]
+    permission_classes = [IsAuthenticated]
     pagination_class = CustomPagination
+
+    def get_queryset(self):
+        return Habit.objects.filter(user=self.request.user)
 
 
 class HabitRetrieveAPIView(RetrieveAPIView):
@@ -40,7 +43,7 @@ class HabitRetrieveAPIView(RetrieveAPIView):
 class HabitUpdateAPIView(UpdateAPIView):
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
-    permission_classes = [IsOwner]
+    permission_classes = [IsAuthenticated, IsOwner]
 
 
 class HabitDestroyAPIView(DestroyAPIView):
