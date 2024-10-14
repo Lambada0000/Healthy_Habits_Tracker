@@ -11,8 +11,10 @@ class ChoiceRewardValidator:
 
     def __call__(self, habit):
         if habit.get(self.related_habit) and habit.get(self.reward):
-            raise ValidationError(f"""Нельзя выбрать {self.related_habit} и {self.reward} одновременно, 
-            выберите награду или приятную привычку.""")
+            raise ValidationError(
+                f"""Нельзя выбрать {self.related_habit} и {self.reward} одновременно, 
+            выберите награду или приятную привычку."""
+            )
 
 
 class DurationValidator:
@@ -47,7 +49,9 @@ class PeriodicityValidator:
 
     def __call__(self, habit):
         if habit.get(self.periodicity) not in range(1, 8):
-            raise ValidationError("Периодичность привычки должна быть в диапазоне от 1 до 7 дней.")
+            raise ValidationError(
+                "Периодичность привычки должна быть в диапазоне от 1 до 7 дней."
+            )
 
 
 class AbsenceValidator:
@@ -64,5 +68,6 @@ class AbsenceValidator:
             and habit.get(self.reward)
             or habit.get(self.related_habit)
         ):
-            raise ValidationError("Приятная привычка не должна иметь вознаграждения или связанную привычку.")
-        
+            raise ValidationError(
+                "Приятная привычка не должна иметь вознаграждения или связанную привычку."
+            )

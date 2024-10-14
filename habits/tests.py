@@ -10,7 +10,10 @@ class HabitTestCase(APITestCase):
     def setUp(self):
         self.user = User.objects.create(email="test@test.com")
         self.habit = Habit.objects.create(
-            action="Побегать на прогулку", user=self.user, time="07:00:00", place="улица"
+            action="Побегать на прогулку",
+            user=self.user,
+            time="07:00:00",
+            place="улица",
         )
         self.client.force_authenticate(user=self.user)
 
@@ -62,19 +65,21 @@ class HabitTestCase(APITestCase):
             "count": 1,
             "next": None,
             "previous": None,
-            "results": [{
-                "id": self.habit.pk,
-                "user": self.user.pk,
-                "place": self.habit.place,
-                "time": self.habit.time,
-                "action": self.habit.action,
-                "pleasant_habit_sign": False,
-                "periodicity": self.habit.periodicity,
-                "reward": None,
-                "duration": "0" + str(self.habit.duration),
-                "is_published": True,
-                "related_habit": None,
-            }]
+            "results": [
+                {
+                    "id": self.habit.pk,
+                    "user": self.user.pk,
+                    "place": self.habit.place,
+                    "time": self.habit.time,
+                    "action": self.habit.action,
+                    "pleasant_habit_sign": False,
+                    "periodicity": self.habit.periodicity,
+                    "reward": None,
+                    "duration": "0" + str(self.habit.duration),
+                    "is_published": True,
+                    "related_habit": None,
+                }
+            ],
         }
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, result)
