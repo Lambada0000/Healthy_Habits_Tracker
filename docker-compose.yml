@@ -1,7 +1,6 @@
 version: '3'
 
 services:
-
   redis:
     image: redis:latest
     restart: on-failure
@@ -12,9 +11,10 @@ services:
     image: postgres
     restart: on-failure
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${PASSWORD}
+      POSTGRES_DB: ${NAME}
       PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_HOST_AUTH_METHOD : trust
     volumes:
       - pg_data:/var/lib/postgresql/data/pgdata
     healthcheck:
